@@ -1,6 +1,6 @@
 {
   "name": "eslint-traverser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A utility that helps traverse code the way ESLint does",
   "main": "index.js",
   "scripts": {
