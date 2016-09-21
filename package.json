@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint .",
     "unit": "istanbul cover jasmine JASMINE_CONFIG_PATH=test/jasmine.json",
-    "test": "npm run lint  && npm run unit"
+    "test": "npm run lint  && npm run coveralls",
+    "coveralls": "npm run unit && cat coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
   },
   "homepage": "https://github.com/ganimomer/eslint-traverser#readme",
   "devDependencies": {
+    "coveralls": "2.11.14",
     "eslint-config-wix-editor": "0.2.3",
     "istanbul": "0.4.5",
     "jasmine": "2.4.1",
