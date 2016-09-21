@@ -1,0 +1,39 @@
+{
+  "name": "eslint-traverser",
+  "version": "1.0.0",
+  "description": "A utility that helps traverse code the way ESLint does",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "unit": "istanbul cover jasmine JASMINE_CONFIG_PATH=test/jasmine.json",
+    "test": "npm run lint  && npm run unit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ganimomer/eslint-traverser.git"
+  },
+  "keywords": [
+    "eslint",
+    "utility",
+    "traverse",
+    "ast",
+    "estree",
+    "esparse"
+  ],
+  "author": "Omer Ganim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ganimomer/eslint-traverser/issues"
+  },
+  "homepage": "https://github.com/ganimomer/eslint-traverser#readme",
+  "devDependencies": {
+    "eslint-config-wix-editor": "0.2.3",
+    "istanbul": "0.4.5",
+    "jasmine": "2.4.1",
+    "mocha": "3.0.2"
+  },
+  "dependencies": {
+    "eslint": "^3.5.0",
+    "lodash": "^4.0.0"
+  }
+}
