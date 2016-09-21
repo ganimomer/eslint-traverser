@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/ganimomer/eslint-traverser.svg?branch=master)](https://travis-ci.org/ganimomer/eslint-traverser)
+
+
 # eslint-traverser
 A utility that helps traverse code the way ESLint does.
 This allows you to test any utilities you write for ESLint rules.
