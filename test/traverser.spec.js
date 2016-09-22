@@ -102,7 +102,7 @@ describe('eslint-traverser', () => {
     })
 
     it('should not call the cb for any other nodes but the first', () => {
-      var cb = jasmine.createSpy('cb')
+      const cb = jasmine.createSpy('cb')
       traverser('f(g(x))')
         .first('CallExpression', cb)
       expect(cb.calls.count()).toBe(1)
