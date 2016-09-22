@@ -58,3 +58,22 @@ traverse('f(); g(x)')
       //...
     })    
 ```
+
+### Using the `first` method
+The `first` method is the same as the `get` method, except it only calls the callback on the first result, while `get` calls it on all the results
+
+```js
+const traverse = require('eslint-traverser')
+traverse('f(); g()')
+    .get('CallExpression', node => {
+      console.log(node.callee.name) 
+    })
+// f
+// g
+
+traverse('f(); g()')
+    .first('CallExpression', node => {
+      console.log(node.callee.name)
+    })
+// f
+```
