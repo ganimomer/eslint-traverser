@@ -32,6 +32,9 @@ module.exports = code => {
       linter.verify(code, {
         rules: {
           [ruleId]: 2
+        },
+        parserOptions: {
+          ecmaVersion: 6
         }
       })
     }

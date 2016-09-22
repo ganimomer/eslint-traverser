@@ -68,5 +68,10 @@ describe('eslint-traverser', () => {
         done()
       })
     })
+    it('should work with es6 syntax', done => {
+        traverser('const T = () => true').get('ArrowFunctionExpression', () => {
+          done()
+        })
+    })
   })
 })
