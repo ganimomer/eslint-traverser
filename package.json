@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "unit": "istanbul cover jasmine JASMINE_CONFIG_PATH=test/jasmine.json",
-    "test": "npm run lint  && npm run coveralls",
+    "test": "npm run lint  && npm run unit",
     "coveralls": "npm run unit && cat coverage/lcov.info | coveralls"
   },
   "repository": {
