@@ -70,9 +70,9 @@ describe('eslint-traverser', () => {
     })
 
     it('should work with es6 syntax', done => {
-        traverser('const T = () => true').get('ArrowFunctionExpression', () => {
-          done()
-        })
+      traverser('const T = () => true').get('ArrowFunctionExpression', () => {
+        done()
+      })
     })
   })
   describe('first', () => {
@@ -143,6 +143,42 @@ describe('eslint-traverser', () => {
 
     it('should work with es6 syntax', done => {
       traverser('const T = () => true').first('ArrowFunctionExpression', () => {
+        done()
+      })
+    })
+  })
+  describe('visitAll', () => {
+    it('should throw a message if no CB is specified', () => {
+      expect(() => traverser('var x').visitAll()).toThrowError('Missing mandatory parameter - cb - Must be a Function')
+    })
+    it('should call the CB on Program:exit with visitors undefined', done => {
+        traverser('var x').visitAll(undefined, (node, context) => {
+          expect(node.type).toBe('Program')
+          expect(context instanceof RuleContext).toBe(true)
+          done()
+        })
+    })
+    it('should visit relevant visitors before the CB', done => {
+      const callExpressionVisitor = jasmine.createSpy('CallExpression')
+      const identifierVisitor = jasmine.createSpy('Identifier')
+      const binaryExpressionVisitor = jasmine.createSpy('binaryExpression')
+      traverser('var y = f(x)').visitAll({
+        CallExpression: callExpressionVisitor,
+        Identifier: identifierVisitor,
+        BinaryExpression: binaryExpressionVisitor
+      }, () => {
+        expect(callExpressionVisitor).toHaveBeenCalled()
+        expect(identifierVisitor).toHaveBeenCalled()
+        expect(binaryExpressionVisitor).not.toHaveBeenCalled()
+        done()
+      })
+    })
+    it('should visit Program:exit before the CB if there is such a visitor', done => {
+      const programExitVisitor = jasmine.createSpy('ProgramExit')
+      traverser('var x').visitAll({
+        'Program:exit': programExitVisitor
+      }, node => {
+        expect(programExitVisitor).toHaveBeenCalledWith(node)
         done()
       })
     })
