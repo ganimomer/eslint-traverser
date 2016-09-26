@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/ganimomer/eslint-traverser.svg?branch=master)](https://travis-ci.org/ganimomer/eslint-traverser)
 [![Coverage Status](https://coveralls.io/repos/github/ganimomer/eslint-traverser/badge.svg?branch=master)](https://coveralls.io/github/ganimomer/eslint-traverser?branch=master)
-
+[![NPM version](http://img.shields.io/npm/v/eslint-traverser.svg?style=flat-square)](https://npmjs.org/package/eslint-traverser) 
 
 # eslint-traverser
 A utility that helps traverse code the way ESLint does.
