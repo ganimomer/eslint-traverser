@@ -77,3 +77,35 @@ traverse('f(); g()')
     })
 // f
 ```
+
+### Using the `visitAll` method
+The `visitAll` method gets two arguments: first, an optional `visitors` object in the same structure as an ESLint rule visitor object.
+The second is a callback, that gets called at the end of the code traversal with two arguments: the `Program` node and the context.
+
+```js
+const traverse = require('eslint-traverser')
+traverse('var y = f(x)')
+    .visitAll((node, context) => {
+      console.log(node.type) //Program
+      
+    })
+
+traverse('var y = f(x)')
+    .visitAll({
+      CallExpression(node) { console.log('Call expression!')}
+    }, () => { console.log('finished!')})
+// Call expression!
+// finished!
+```
+
+### Using the `runRuleCode` method
+The `runRuleCode` method gets one argument: the rule. This runs an ESLint rule (a function that gets a context and returns a visitors object) on the specified code.
+
+```js
+const traverse = require('eslint-traverser')
+traverse('var y = f(x)')
+    .runRuleCode(context => ({
+      CallExpression(node) { console.log('Call expression!')}
+    }))
+// Call expression!
+```

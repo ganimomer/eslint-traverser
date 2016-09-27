@@ -4,6 +4,7 @@ const iteratee = require('lodash/iteratee')
 const constant = require('lodash/constant')
 const isFunction = require('lodash/isFunction')
 const noop = require('lodash/noop')
+const mapValues = require('lodash/mapValues')
 const assign = require('lodash/assign')
 function throwMessage(message) {
   throw Error(message)
@@ -64,6 +65,9 @@ module.exports = code => {
           cb(node, context)
         }
       })
+    },
+    runRuleCode(rule) {
+      runOneTimeRule(code, rule)
     },
     visitAll(visitors = {}, cb) {
       if (!isFunction(cb)) {

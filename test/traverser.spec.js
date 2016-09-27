@@ -152,11 +152,11 @@ describe('eslint-traverser', () => {
       expect(() => traverser('var x').visitAll()).toThrowError('Missing mandatory parameter - cb - Must be a Function')
     })
     it('should call the CB on Program:exit with visitors undefined', done => {
-        traverser('var x').visitAll(undefined, (node, context) => {
-          expect(node.type).toBe('Program')
-          expect(context instanceof RuleContext).toBe(true)
-          done()
-        })
+      traverser('var x').visitAll(undefined, (node, context) => {
+        expect(node.type).toBe('Program')
+        expect(context instanceof RuleContext).toBe(true)
+        done()
+      })
     })
     it('should visit relevant visitors before the CB', done => {
       const callExpressionVisitor = jasmine.createSpy('CallExpression')
@@ -181,6 +181,17 @@ describe('eslint-traverser', () => {
         expect(programExitVisitor).toHaveBeenCalledWith(node)
         done()
       })
+    })
+  })
+  describe('runRuleCode', () => {
+    it('should run the code for a given rule', done => {
+      traverser('var y = f(x)')
+        .runRuleCode(context => ({
+          CallExpression(node) {
+            expect(node.type).toBe('CallExpression')
+            done()
+          }
+        }))
     })
   })
 })
