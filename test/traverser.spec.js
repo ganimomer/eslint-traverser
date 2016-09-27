@@ -10,6 +10,12 @@ describe('eslint-traverser', () => {
     expect(typeof traverser('var x')).toBe('object')
     expect(typeof traverser('var x').get).toBe('function')
   })
+  it('should accept a second object of parserOptions and apply it', done => {
+    traverser('import _ from "lodash"', {sourceType: 'module'})
+      .get('Program:exit', () => {
+        done()
+      })
+  })
   describe('get', () => {
     it('should throw an error for a get without a type', () => {
       expect(() => traverser('var x').get(undefined)).toThrowError('Missing mandatory parameter - type - Must be a String')

@@ -21,7 +21,7 @@ const getRestParams = rest => {
   return {cb, matches}
 }
 
-const runOneTimeRule = (code, rule) => {
+const runOneTimeRule = (code, parserOptions, rule) => {
   const linter = require('eslint').linter
   const ruleId = uniqueId()
   linter.defineRule(ruleId, rule)
@@ -29,28 +29,28 @@ const runOneTimeRule = (code, rule) => {
     rules: {
       [ruleId]: 2
     },
-    parserOptions: {
+    parserOptions: assign({
       ecmaVersion: 6
-    }
+    }, parserOptions)
   })
 }
 
-const runOneTimeRuleForType = (code, type, logic) => {
-  runOneTimeRule(code, context => ({
+const runOneTimeRuleForType = (code, parserOptions, type, logic) => {
+  runOneTimeRule(code, parserOptions, context => ({
     [type](node) {
       logic(node, context)
     }
   }))
 }
 
-module.exports = code => {
+module.exports = (code, parserOptions = {}) => {
   if (!code) {
     throw Error('Code must be a string.')
   }
   return ({
     get(type = throwMessage(MISSING_TYPE), ...rest) {
       const {cb, matches} = getRestParams(rest)
-      runOneTimeRuleForType(code, type, (node, context) => {
+      runOneTimeRuleForType(code, parserOptions, type, (node, context) => {
         if (matches(node)) {
           cb(node, context)
         }
@@ -59,7 +59,7 @@ module.exports = code => {
     first(type = throwMessage(MISSING_TYPE), ...rest) {
       const {cb, matches} = getRestParams(rest)
       let found = false
-      runOneTimeRuleForType(code, type, (node, context) => {
+      runOneTimeRuleForType(code, parserOptions, type, (node, context) => {
         if (matches(node) && !found) {
           found = true
           cb(node, context)
@@ -67,14 +67,14 @@ module.exports = code => {
       })
     },
     runRuleCode(rule) {
-      runOneTimeRule(code, rule)
+      runOneTimeRule(code, parserOptions, rule)
     },
     visitAll(visitors = {}, cb) {
       if (!isFunction(cb)) {
         throwMessage(MISSING_CB)
       }
       const origExitVisitor = visitors['Program:exit'] || noop
-      runOneTimeRule(code, context => assign({}, visitors, {
+      runOneTimeRule(code, parserOptions, context => assign({}, visitors, {
         'Program:exit'(node) {
           origExitVisitor(node)
           cb(node, context)
