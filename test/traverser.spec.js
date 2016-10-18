@@ -10,11 +10,20 @@ describe('eslint-traverser', () => {
     expect(typeof traverser('var x')).toBe('object')
     expect(typeof traverser('var x').get).toBe('function')
   })
-  it('should accept a second object of parserOptions and apply it', done => {
+  it('should accept a second object of config and apply it', done => {
+    traverser('import _ from "lodash"', {parserOptions: {sourceType: 'module'}})
+      .get('Program:exit', () => {
+        done()
+      })
+  })
+  it('should make that object parserOptions if it only has parserOptions keys', done => {
     traverser('import _ from "lodash"', {sourceType: 'module'})
       .get('Program:exit', () => {
         done()
       })
+  })
+  it('should throw if the config options passes a rules object', () => {
+    expect(() => traverser('var x', {rules: {}})).toThrowError('Do not specify rules in the config.')
   })
   describe('get', () => {
     it('should throw an error for a get without a type', () => {

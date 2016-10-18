@@ -14,7 +14,7 @@ npm install eslint-traverser
 ## Usage
 
 ### Common Usage
-The module exposes a function that gets code and an optional `parserOptions` object, and gets a traverser, with a `get` function.
+The module exposes a function that gets code and an optional `config` object, and gets a traverser, with a `get` function.
 The `get` function calls the callback for every `node` of the type, with `node` and `context` parameters,
  which are the same as the ones in ESLint itself. 
 ```js
@@ -28,10 +28,19 @@ traverse('var y = f(x)')
     })
 ```
 
-#### Using parser options
-You can define additional parserOptions (e.g. JSX or ES6 modules) using a second parameter in the call to `traverser`.
+#### Using configs
+You can define a configuration to run your traversal (globals, settings, etc) in an additional parameter in the call to `traverser`.
+You may not use the `rules` key in this configuration.
+
+```js
 const traverse = require('eslint-traverser')
 
+traverse('import foo from "bar"', {parserOptions: {sourceType: module}})
+    .get('Program:exit', (node, context) => {
+      console.log('Modules!')
+    })
+```
+As a shortcut, you can pass only the parserOptions object, and if your config only contains parserOptions keys, it will work normally.
 ```js
 const traverse = require('eslint-traverser')
 
