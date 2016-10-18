@@ -1,6 +1,6 @@
 'use strict'
 
-const traverser = require('../index.js')
+const traverser = require('../src/index.js')
 const RuleContext = require('eslint/lib/rule-context')
 describe('eslint-traverser', () => {
   it('should throw if no code is given', () => {
