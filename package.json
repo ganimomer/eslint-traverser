@@ -1,6 +1,6 @@
 {
   "name": "eslint-traverser",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "A utility that helps traverse code the way ESLint does",
   "main": "lib/index.js",
   "scripts": {
@@ -23,7 +23,9 @@
     "estree",
     "esparse"
   ],
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "author": "Omer Ganim",
   "license": "MIT",
   "bugs": {
