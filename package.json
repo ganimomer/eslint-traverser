@@ -23,6 +23,7 @@
     "estree",
     "esparse"
   ],
+  "files": ["lib"],
   "author": "Omer Ganim",
   "license": "MIT",
   "bugs": {
